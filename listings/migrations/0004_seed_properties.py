@@ -1,4 +1,4 @@
-from django.db import migrations
+from django.db import migrations, models
 
 
 PROPERTIES = [
@@ -32,4 +32,11 @@ def seed_properties(apps, schema_editor):
 class Migration(migrations.Migration):
     dependencies = [('listings', '0003_inquiry')]
 
-    operations = [migrations.RunPython(seed_properties, migrations.RunPython.noop)]
+    operations = [
+        migrations.AlterField(
+            model_name='property',
+            name='price',
+            field=models.BigIntegerField(),
+        ),
+        migrations.RunPython(seed_properties, migrations.RunPython.noop),
+    ]
