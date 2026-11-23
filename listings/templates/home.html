@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>𝓜𝓙 𝓡𝓮𝓪𝓵 𝓔𝓼𝓽𝓪𝓽𝓮𝓼</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    {% load price_tags %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1 id="home"><b>𝐌𝐉</b> <i>𝚁𝚎𝚊𝚕 𝙴𝚜𝚝𝚊𝚝𝚎𝚜</i></h1>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#properties">Properties</a>
+        <a href="#projects">Previous Projects</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+<div class="hero">
+    
+    <div class="hero-text">
+        <h2><b>Build Your Dream House</b></h2>
+        <p class="line1"><i>Your dream home is waiting</i>...</p>
+        <p class="line2"><i>Every great story starts at home</i>...</p>
+        <p class="line3"><i>Turn your dream into an address</i>...</p>
+        <p class="line4"><i>Live where you love</i>...</p>
+        <p class="line5"><i>Invest in the place you will call home</i>...</p>
+        <p class="line6"><i>Your future begins at your front door</i>...</p>
+        
+    </div>
+</div>
+     
+    
+    <h2 id="properties">Our Properties</h2>
+    <div class="container">
+        {% for p in properties %}
+        <div class="card">
+            <img src="{{ p.image.url }}" alt="{{ p.title }}">
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.city }}</p>
+            <p class="price">₹{{ p.price|inr }}</p>
+            <a href="/booking/{{ p.id }}/"><button><b>Book Now</b></button></a>
+            <p>{{ p.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 id="projects">Previous Projects</h2>
+  <div class="project">
+  <img src="/media/properties/001.jpg" alt="Green Valley Villa">
+  <h3>Green Valley Villa</h3>
+  <p>Luxury living with a private pool</p>
+</div>
+<div class="project">
+  <img src="/media/properties/004.jpg" alt="Sunrise Apartments">
+  <h3>Sunrise Apartments</h3>
+  <p>Modern homes for growing families</p>
+</div>
+<div class="project">
+  <img src="/media/properties/003.jpg" alt="Palm Beach Homes">
+  <h3>Palm Beach Homes</h3>
+  <p>Relaxed living by the sea</p>
+</div>
+
+
+   <h2 id="about">About Us</h2>
+    <div class="about">
+    <p>MJ Villas builds beautiful, affordable homes for families in Visakhapatnam. From cozy apartments to spacious luxury villas, every home is designed for comfort and style.</p>
+    <div class="stats">
+        <div><h3>00+</h3><p>Years</p></div>
+        <div><h3>000+</h3><p>Happy Families</p></div>
+        <div><h3>000+</h3><p>Projects</p></div>
+    </div>
+</div>
+
+
+<div class="marquee-strip">
+  <div class="marquee-track">
+   <span>🏡 10 Properties Available</span>
+<span>🔑 Free Site Visits</span>
+<span>📞 Easy Booking</span>
+<span>🌊 Prime Vizag Locations</span>
+<span>🏡 10 Properties Available</span>
+<span>🔑 Free Site Visits</span>
+<span>📞 Easy Booking</span>
+<span>🌊 Prime Vizag Locations</span>
+  </div>
+</div>
+
+
+
+
+    <h2 class="title" id="contact">Contact Us</h2>
+<div class="contact">
+
+    <div class="contact-info">
+        <h3>Get In Touch</h3>
+        <p>Tell us what you are looking for and our team will call you back within 24 hours.</p>
+        <p><b>Address:</b><br>Visakhapatnam, Andhra Pradesh</p>
+        <p><b>Phone:</b><br>98765 43210</p>
+        <p><b>Email:</b><br>mj@realestate.com</p>
+        <p><b>Office Hours:</b><br>Monday to Saturday, 9 AM to 6 PM</p>
+    </div>
+
+    <div class="contact-form">
+        <h3>Property Inquiry</h3>
+        {% if sent %}
+            <p class="sent">Thank you! We received your inquiry and will call you soon.</p>
+        {% else %}
+        <form method="POST" action="/#contact">
+            {% csrf_token %}
+            <div class="row">
+                <input type="text" name="name" placeholder="Your full name" required>
+                <input type="email" name="email" placeholder="Your email" required>
+            </div>
+            <div class="row">
+                <input type="text" name="mobile" placeholder="Mobile number" required>
+                <input type="text" name="address" placeholder="Your address" required>
+            </div>
+            <div class="row">
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="district" placeholder="District" required>
+            </div>
+            <textarea name="message" placeholder="Which property are you interested in?"></textarea>
+            <button type="submit" class="send-btn">Send Inquiry</button>
+        </form>
+        {% endif %}
+    </div>
+
+</div>
+
+    <footer>© 2026 MJ Real Estates</footer>
+
+</body>
+</html>

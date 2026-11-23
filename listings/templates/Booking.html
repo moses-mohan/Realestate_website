@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book {{ p.title }}</title>
+    {% load static %}
+    {% load price_tags %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <h1><b>MJ</b> <i>Real Estates</i></h1>
+
+    <div class="booking">
+        <img src="{{ p.image.url }}" alt="{{ p.title }}">
+        <h2>{{ p.title }}</h2>
+        <p>{{ p.city }}</p>
+        <p class="price">₹{{ p.price|inr }}</p>
+
+        {% if message %}
+    <div class="popup-bg">
+        <div class="popup">
+            <h2>🎉Congratulations!🎉</h2>
+            <p>{{ message }}</p>
+            <a href="/">Back to Home</a>
+        </div>
+    </div>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="text" name="phone" placeholder="Phone number" required>
+        <button type="submit">Confirm Booking</button>
+    </form>
+{% endif %}
+
+        <br>
+        <a href="/">Back to Home</a>
+    </div>
+
+</body>
+</html>
