@@ -11,7 +11,7 @@
     <h1><b>MJ</b> <i>Real Estates</i></h1>
 
     <div class="booking">
-        <img src="{{ p.image.url }}" alt="{{ p.title }}">
+        <img src="{% static p.image.name %}" alt="{{ p.title }}">
         <h2>{{ p.title }}</h2>
         <p>{{ p.city }}</p>
         <p class="price">₹{{ p.price|inr }}</p>
@@ -27,8 +27,7 @@
 {% else %}
     <form method="POST">
         {% csrf_token %}
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="text" name="phone" placeholder="Phone number" required>
+        {{ form.as_p }}
         <button type="submit">Confirm Booking</button>
     </form>
 {% endif %}

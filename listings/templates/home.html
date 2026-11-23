@@ -38,7 +38,7 @@
     <div class="container">
         {% for p in properties %}
         <div class="card">
-            <img src="{{ p.image.url }}" alt="{{ p.title }}">
+            <img src="{% static p.image.name %}" alt="{{ p.title }}">
             <h3>{{ p.title }}</h3>
             <p>{{ p.city }}</p>
             <p class="price">₹{{ p.price|inr }}</p>
@@ -50,17 +50,17 @@
 
     <h2 id="projects">Previous Projects</h2>
   <div class="project">
-  <img src="/media/properties/001.jpg" alt="Green Valley Villa">
+  <img src="{% static 'properties/001.jpg' %}" alt="Green Valley Villa">
   <h3>Green Valley Villa</h3>
   <p>Luxury living with a private pool</p>
 </div>
 <div class="project">
-  <img src="/media/properties/004.jpg" alt="Sunrise Apartments">
+  <img src="{% static 'properties/004.jpg' %}" alt="Sunrise Apartments">
   <h3>Sunrise Apartments</h3>
   <p>Modern homes for growing families</p>
 </div>
 <div class="project">
-  <img src="/media/properties/003.jpg" alt="Palm Beach Homes">
+  <img src="{% static 'properties/003.jpg' %}" alt="Palm Beach Homes">
   <h3>Palm Beach Homes</h3>
   <p>Relaxed living by the sea</p>
 </div>
@@ -113,18 +113,18 @@
         <form method="POST" action="/#contact">
             {% csrf_token %}
             <div class="row">
-                <input type="text" name="name" placeholder="Your full name" required>
-                <input type="email" name="email" placeholder="Your email" required>
+                {{ form.name }}{{ form.name.errors }}
+                {{ form.email }}{{ form.email.errors }}
             </div>
             <div class="row">
-                <input type="text" name="mobile" placeholder="Mobile number" required>
-                <input type="text" name="address" placeholder="Your address" required>
+                {{ form.mobile }}{{ form.mobile.errors }}
+                {{ form.address }}{{ form.address.errors }}
             </div>
             <div class="row">
-                <input type="text" name="city" placeholder="City" required>
-                <input type="text" name="district" placeholder="District" required>
+                {{ form.city }}{{ form.city.errors }}
+                {{ form.district }}{{ form.district.errors }}
             </div>
-            <textarea name="message" placeholder="Which property are you interested in?"></textarea>
+            {{ form.message }}{{ form.message.errors }}
             <button type="submit" class="send-btn">Send Inquiry</button>
         </form>
         {% endif %}

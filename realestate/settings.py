@@ -5,9 +5,13 @@ import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-local-dev-only')
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False' if os.environ.get('RENDER') else 'True') == 'True'
 
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if not DEBUG:
+        raise RuntimeError('Set DJANGO_SECRET_KEY for production.')
+    SECRET_KEY = 'django-insecure-local-dev-only'
 
 ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
@@ -53,9 +57,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'realestate.wsgi.application'
 
+database_url = os.environ.get('DATABASE_URL')
+if not DEBUG and not database_url:
+    raise RuntimeError('Set DATABASE_URL for production so bookings and inquiries persist.')
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
+        default=database_url or 'sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
         conn_max_age=600,
     )
 }
@@ -85,6 +93,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [('properties', BASE_DIR / 'properties')]
 
 STORAGES = {
     'default': {
